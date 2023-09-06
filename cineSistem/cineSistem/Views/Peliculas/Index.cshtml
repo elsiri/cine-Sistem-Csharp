@@ -1,0 +1,161 @@
+﻿@model IEnumerable<cineSistem.Models.Pelicula>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<h1 class="text-center">Cartelera CINE</h1>
+@if (TempData.ContainsKey("MensajeExito"))
+{
+    <div class="alert alert-success mensaje-exito text-center">
+        @TempData["MensajeExito"]
+    </div>
+}
+<style>
+    .rating {
+        float: left;
+    }
+
+        /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t
+       follow these rules. Every browser that supports :checked also supports :not(), so
+       it doesn’t make the test unnecessarily selective */
+        .rating:not(:checked) > a > input {
+            position: absolute;
+            top: -9999px;
+            clip: rect(0,0,0,0);
+        }
+
+        .rating:not(:checked) > a > label {
+            float: right;
+            width: 1em;
+            padding: 0 .1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 200%;
+            line-height: 1.2;
+            color: #ddd;
+            text-shadow: 1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+        }
+
+            .rating:not(:checked) > a > label:before {
+                content: '★ ';
+            }
+
+        .rating > a > input:checked ~ label {
+            color: #f70;
+            text-shadow: 1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+        }
+
+        .rating:not(:checked) > a > label:hover,
+        .rating:not(:checked) > a > label:hover ~  label {
+            color: gold;
+            text-shadow: 1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+        }
+
+    rating > a > input:checked + label:hover,
+    rating > a > input:checked + label:hover ~ label,
+    rating > a > input:checked ~ label:hover,
+    rating > a > input:checked ~ label:hover ~ label,
+    rating > a > label:hover ~ input:checked ~ label {
+            color: #ea0;
+            text-shadow: 1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+        }
+
+    rating > a > label:active {
+            position: relative;
+            top: 2px;
+            left: 2px;
+        }
+
+    /* end of Lea's code */
+
+    /*
+     * Clearfix from html5 boilerplate
+     */
+
+    .clearfix:before,
+    .clearfix:after {
+        content: " "; /* 1 */
+        display: table; /* 2 */
+    }
+
+    .clearfix:after {
+        clear: both;
+    }
+
+    /*
+     * For IE 6/7 only
+     * Include this rule to trigger hasLayout and contain floats.
+     */
+
+    .clearfix {
+        *zoom: 1;
+    }
+
+    /* my stuff */
+    #status, button {
+        margin: 20px 0;
+    }
+</style>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <img src="@Html.DisplayFor(modelItem => item.Imagen)" class="card-img-top " style="height:200px!important" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nombre)</h5>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                        <p class="card-text"><small class="text-muted">Genero: @Html.DisplayFor(modelItem => item.Genero)</small></p>
+                        <a asp-action="Edit" asp-route-id="@item.IdPel">Edit</a>
+                        <fieldset class="rating">
+                            
+                                <legend>Calificar</legend>
+                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="5">
+                                    <input type="radio" id="star5" name="rating" value="5" />
+                                    <label for="star5" title="Muy buena">5 stars</label>
+                                </a>
+                                 <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="4">
+                                    <input type="radio" id="star4" name="rating" value="4" />
+                                    <label for="star4" title="Buena">4 stars</label>
+                                </a>
+                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="3">
+                                    <input type="radio" id="star3" name="rating" value="3" />
+                                    <label for="star3" title="Mas o menos">3 stars</label>
+                                </a>
+                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="2">
+                                    <input type="radio" id="star2" name="rating" value="2" />
+                                    <label for="star2" title="Mala">2 stars</label>
+                                </a>
+                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="1">
+                                    <input type="radio" id="star1" name="rating" value="1" />
+                                    <label for="star1" title="Muy mala">1 star</label>
+                                </a>                            
+                        </fieldset>
+                    </div>
+                </div>
+
+            </div>
+
+        }
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var mensajeExito = $(".mensaje-exito");
+
+        if (mensajeExito.length > 0) {
+            setTimeout(function () {
+                mensajeExito.fadeOut("slow");
+            }, 5000); 
+        }
+    });
+</script>
