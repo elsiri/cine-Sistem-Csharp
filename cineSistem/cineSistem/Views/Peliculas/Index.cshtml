@@ -13,90 +13,8 @@
     </div>
 }
 <style>
-    .rating {
-        float: left;
-    }
-
-        /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t
-       follow these rules. Every browser that supports :checked also supports :not(), so
-       it doesn’t make the test unnecessarily selective */
-        .rating:not(:checked) > a > input {
-            position: absolute;
-            top: -9999px;
-            clip: rect(0,0,0,0);
-        }
-
-        .rating:not(:checked) > a > label {
-            float: right;
-            width: 1em;
-            padding: 0 .1em;
-            overflow: hidden;
-            white-space: nowrap;
-            cursor: pointer;
-            font-size: 200%;
-            line-height: 1.2;
-            color: #ddd;
-            text-shadow: 1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
-        }
-
-            .rating:not(:checked) > a > label:before {
-                content: '★ ';
-            }
-
-        .rating > a > input:checked ~ label {
-            color: #f70;
-            text-shadow: 1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
-        }
-
-        .rating:not(:checked) > a > label:hover,
-        .rating:not(:checked) > a > label:hover ~  label {
-            color: gold;
-            text-shadow: 1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
-        }
-
-    rating > a > input:checked + label:hover,
-    rating > a > input:checked + label:hover ~ label,
-    rating > a > input:checked ~ label:hover,
-    rating > a > input:checked ~ label:hover ~ label,
-    rating > a > label:hover ~ input:checked ~ label {
-            color: #ea0;
-            text-shadow: 1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
-        }
-
-    rating > a > label:active {
-            position: relative;
-            top: 2px;
-            left: 2px;
-        }
-
-    /* end of Lea's code */
-
-    /*
-     * Clearfix from html5 boilerplate
-     */
-
-    .clearfix:before,
-    .clearfix:after {
-        content: " "; /* 1 */
-        display: table; /* 2 */
-    }
-
-    .clearfix:after {
-        clear: both;
-    }
-
-    /*
-     * For IE 6/7 only
-     * Include this rule to trigger hasLayout and contain floats.
-     */
-
-    .clearfix {
-        *zoom: 1;
-    }
-
-    /* my stuff */
-    #status, button {
-        margin: 20px 0;
+    ul > li{
+        display:inline-block;
     }
 </style>
 
@@ -112,31 +30,34 @@
                         <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nombre)</h5>
                         <p class="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
                         <p class="card-text"><small class="text-muted">Genero: @Html.DisplayFor(modelItem => item.Genero)</small></p>
-                        <a asp-action="Edit" asp-route-id="@item.IdPel">Edit</a>
-                        <fieldset class="rating">
-                            
-                                <legend>Calificar</legend>
-                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="5">
-                                    <input type="radio" id="star5" name="rating" value="5" />
-                                    <label for="star5" title="Muy buena">5 stars</label>
+                        <p>Calificar:</p>
+                        <ul>
+                            <li>
+                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="1" asp-route-nombre="@item.Nombre">
+                                    <i class="fa-solid fa-star"></i>
                                 </a>
-                                 <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="4">
-                                    <input type="radio" id="star4" name="rating" value="4" />
-                                    <label for="star4" title="Buena">4 stars</label>
+                            </li>
+                            <li>
+                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="2" asp-route-nombre="@item.Nombre">
+                                    <i class="fa-solid fa-star"></i>
                                 </a>
-                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="3">
-                                    <input type="radio" id="star3" name="rating" value="3" />
-                                    <label for="star3" title="Mas o menos">3 stars</label>
+                            </li>
+                            <li>
+                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="3" asp-route-nombre="@item.Nombre">
+                                    <i class="fa-solid fa-star"></i>
                                 </a>
-                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="2">
-                                    <input type="radio" id="star2" name="rating" value="2" />
-                                    <label for="star2" title="Mala">2 stars</label>
+                            </li>
+                            <li>
+                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="4" asp-route-nombre="@item.Nombre">
+                                    <i class="fa-solid fa-star"></i>
                                 </a>
-                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="1">
-                                    <input type="radio" id="star1" name="rating" value="1" />
-                                    <label for="star1" title="Muy mala">1 star</label>
-                                </a>                            
-                        </fieldset>
+                            </li>
+                            <li>
+                                <a asp-controller="RankingPeliculas" asp-action="Calificar" asp-route-idPel="@item.IdPel" asp-route-rank="5" asp-route-nombre="@item.Nombre">
+                                    <i class="fa-solid fa-star"></i>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
@@ -147,6 +68,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/38595e06c7.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
 

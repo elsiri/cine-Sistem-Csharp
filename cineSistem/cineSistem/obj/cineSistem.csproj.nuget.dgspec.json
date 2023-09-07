@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\xampp\\htdocs\\cine-Sistem-Csharp\\cineSistem\\cineSistem\\cineSistem.csproj": {}
+    "D:\\projects\\C#\\cineSistem\\cineSistem\\cineSistem.csproj": {}
   },
   "projects": {
-    "C:\\xampp\\htdocs\\cine-Sistem-Csharp\\cineSistem\\cineSistem\\cineSistem.csproj": {
+    "D:\\projects\\C#\\cineSistem\\cineSistem\\cineSistem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\xampp\\htdocs\\cine-Sistem-Csharp\\cineSistem\\cineSistem\\cineSistem.csproj",
+        "projectUniqueName": "D:\\projects\\C#\\cineSistem\\cineSistem\\cineSistem.csproj",
         "projectName": "cineSistem",
-        "projectPath": "C:\\xampp\\htdocs\\cine-Sistem-Csharp\\cineSistem\\cineSistem\\cineSistem.csproj",
+        "projectPath": "D:\\projects\\C#\\cineSistem\\cineSistem\\cineSistem.csproj",
         "packagesPath": "C:\\Users\\KEVIN\\.nuget\\packages\\",
-        "outputPath": "C:\\xampp\\htdocs\\cine-Sistem-Csharp\\cineSistem\\cineSistem\\obj\\",
+        "outputPath": "D:\\projects\\C#\\cineSistem\\cineSistem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\KEVIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.21, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.21, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.10, )"

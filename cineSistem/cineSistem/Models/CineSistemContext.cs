@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace cineSistem.Models;
 
-public partial class CineSistemContext : DbContext
+public partial class CineSistemContext : IdentityDbContext
 {
     public CineSistemContext()
     {
@@ -27,6 +28,7 @@ public partial class CineSistemContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Pelicula>(entity =>
         {
             entity.HasKey(e => e.IdPel).HasName("PK__pelicula__3D78D11A11A30BBD");

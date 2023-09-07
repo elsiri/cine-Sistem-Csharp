@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using cineSistem.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace cineSistem.Controllers
 {
+    [Authorize]
     public class RankingPeliculasController : Controller
     {
         private readonly CineSistemContext _context;
@@ -26,22 +28,20 @@ namespace cineSistem.Controllers
         }
         public IActionResult Grafica()
         {
-            // Recuperar los nombres de las películas y las calificaciones promedio
-            var datos = _context.Peliculas
+            var peliculasCalificadas = _context.Peliculas
                 .Select(p => new
                 {
-                    NombrePelicula = p.Nombre,
+                    Nombre = p.Nombre,
                     CalificacionPromedio = p.RankingPeliculas.Average(rp => rp.Ranking)
                 })
                 .OrderByDescending(p => p.CalificacionPromedio)
-                .Take(5) // Obtener las 5 películas con calificación promedio más alta
+                .Take(2) // Obtener las 5 mejores calificadas (ajusta según tus necesidades)
                 .ToList();
 
-            // Convertir los datos en dos arrays separados para usar en la gráfica
-            var nombresPeliculas = datos.Select(d => d.NombrePelicula).ToArray();
-            var calificacionesPromedio = datos.Select(d => d.CalificacionPromedio).ToArray();
+            // Separar los nombres de las películas y las calificaciones promedio
+            var nombresPeliculas = peliculasCalificadas.Select(p => p.Nombre).ToArray();
+            var calificacionesPromedio = peliculasCalificadas.Select(p => Math.Round(p.CalificacionPromedio, 2)).ToArray();
 
-            // Pasar los datos a la vista
             ViewBag.NombresPeliculas = nombresPeliculas;
             ViewBag.CalificacionesPromedio = calificacionesPromedio;
 
@@ -88,7 +88,7 @@ namespace cineSistem.Controllers
             ViewData["IdPel"] = new SelectList(_context.Peliculas, "IdPel", "IdPel", rankingPelicula.IdPel);
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Calificar(int idPel, int rank)
+        public IActionResult Calificar(int idPel, int rank, string nombre)
         {
             var nuevoRanking = new RankingPelicula
             {
@@ -97,7 +97,7 @@ namespace cineSistem.Controllers
             };
             _context.Add(nuevoRanking);
             _context.SaveChangesAsync();
-            TempData["MensajeExito"] = "El ranking se ha guardado exitosamente.";
+            TempData["MensajeExito"] = "El ranking de la pelicula "+nombre+" se ha guardado con exito.";
             return RedirectToAction("Index", "Peliculas");
         }
         // GET: RankingPeliculas/Edit/5
